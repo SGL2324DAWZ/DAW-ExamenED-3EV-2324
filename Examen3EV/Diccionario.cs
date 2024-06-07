@@ -9,10 +9,17 @@ namespace Examen3EV
 {
     // Clase que construye un diccionario de palabras a partir de dos frases
     // El dicionario estará ordenado alfabéticamente
-    internal class Diccionario
+    public class Diccionario
     {
         public List<String> words;
-        public int wordCount;
+
+        private int wordCount;
+
+        public int WordCount
+        {
+            get { return wordCount; }
+            set { wordCount = value; }
+        }
 
         public Diccionario()
         {
@@ -34,10 +41,12 @@ namespace Examen3EV
             words.Clear();
             wordCount = 0;
 
+            string error = "null o vacio";
+
             // primer paso, analizar la primera cadena
             if (f1 == null || f1.Length == 0)
             {
-                return -1;
+                throw new ArgumentOutOfRangeException(nameof(error), "La frase no puede ser null o vacío");
             }
 
             int posIni = 0;
@@ -49,8 +58,7 @@ namespace Examen3EV
 
                 if (word.Length > 0 && !words.Contains(word))
                 {
-                    words.Add(word);
-                    wordCount++;
+                    AnyadirDiccionario(word);
                 }
 
                 posIni = posFin + 1;
@@ -59,8 +67,7 @@ namespace Examen3EV
 
             // añadimos la última palabra
             word = f1.Substring(posIni, f1.Length - posIni);
-            words.Add(word);
-            wordCount++;
+            AnyadirDiccionario(word);
 
             // segundo paso, analizar la segunda cadena
             if (f2 == null || f2.Length == 0) return -2;
@@ -71,21 +78,25 @@ namespace Examen3EV
 
                 if (word.Length > 0 && !words.Contains(word))
                 {
-                    words.Add(word);
-                    wordCount++;
+                    AnyadirDiccionario(word);
                 }
 
                 posIni = posFin + 1;
                 posFin = f2.IndexOf(' ', posIni);
             }
+
             // añadimos la última palabra
             word = f2.Substring(posIni, f2.Length - posIni);
-            words.Add(word);
-            wordCount++;
 
             // tercer paso, Ordenar las palabras
             words.Sort();
             return 0;
+        }
+
+        public void AnyadirDiccionario(string word)
+        {
+            words.Add(word);
+            wordCount++;
         }
     }
 }

@@ -10,6 +10,18 @@ namespace TestSGL
         [TestMethod]
         public void TestMethod1()
         {
+            
+            
+        }
+
+        [TestMethod]
+        [ExceptedException(typeof(ArgumentOutOfRangeException))]
+        public void validarVacio()
+        {
+            string cadena1 = "";
+            string cadena2 = "";
+
+            Diccionario objeto1 = new Diccionario(cadena1, cadena2);
         }
     }
 }
